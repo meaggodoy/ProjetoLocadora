@@ -19,6 +19,8 @@ programa
 				cadastrarFilme(n, a)
 			} senao se (m == 2) {
 				listarDisponiveis(n, a, l)
+			} senao se (m == 3) {
+				filmesLocados(n, a, l)
 			}
 		} enquanto(m != 10)
 		
@@ -38,7 +40,18 @@ programa
 			se (n[i] != " ") {
 				escreva("Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", l[i])
 			} senao {
-				escreva("Nenhum filme disponível")
+				escreva("Nenhum filme disponível\n")
+				i = 10
+			}
+		}
+	}
+
+	funcao filmesLocados(cadeia n[], inteiro a[], inteiro l[]) {
+		para (inteiro i = 0; i < 10; i++) {
+			se (l[i] != 0) {
+				escreva("Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", l[i])
+			} senao {
+				escreva("Nenhum filme alugado\n")
 				i = 10
 			}
 		}
@@ -55,14 +68,3 @@ programa
 		
 	}
 }
-/* $$$ Portugol Studio $$$ 
- * 
- * Esta seção do arquivo guarda informações do Portugol Studio.
- * Você pode apagá-la se estiver utilizando outro editor.
- * 
- * @POSICAO-CURSOR = 693; 
- * @PONTOS-DE-PARADA = ;
- * @SIMBOLOS-INSPECIONADOS = ;
- * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
- * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
- */
