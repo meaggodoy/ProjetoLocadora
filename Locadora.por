@@ -1,5 +1,6 @@
 programa
 {
+  //inicializar vetores
 	funcao zerarDados(cadeia n[], inteiro a[], inteiro l[], inteiro v[]) {
 		para (inteiro i = 0; i < 10; i++) {
 			n[i] = " "
@@ -9,23 +10,29 @@ programa
 		}
 	}
 
+  //função para apresentar o menu para o usuário
 	funcao menuInicial(inteiro m, cadeia n[], inteiro a[], inteiro l[]) {
 		faca {
 			escreva("Selecione a opção desejada:")
 			escreva("\n1 - Cadastrar filme | 2 - Listar filmes disponíveis | 3 - Filmes alugados | 4 - Alugar um filme | 5 - Devolver filme \n6 - Filme mais alugado | 7 - Buscar filme | 8 - Atualizar dados do filme | 9 - Estatísticas gerais | 10 - Sair do programa | ")
 			leia(m)
-	
-			se (m == 1) {
-				cadastrarFilme(n, a)
-			} senao se (m == 2) {
-				listarDisponiveis(n, a, l)
-			} senao se (m == 3) {
-				filmesLocados(n, a, l)
-			}
+
+      escolha(m) {
+        caso 1:
+        cadastrarFilme(n, a)
+        pare
+        caso 2:
+        listarDisponiveis(n, a, l)
+        pare
+        caso 3:
+        filmesLocados(n, a, l)
+        pare
+      }
 		} enquanto(m != 10)
 		
 	}
 
+  //função da primeira opção: cadastrar filmes
 	funcao cadastrarFilme(cadeia n[], inteiro a[]) {
 		para (inteiro i = 0; i < 10; i++) {
 			escreva("Digite o nome do filme")
@@ -35,6 +42,7 @@ programa
 		}
 	}
 
+  //função da segunda opção: listar os filmes disponíveis
 	funcao listarDisponiveis(cadeia n[], inteiro a[], inteiro l[]) {
 		para (inteiro i = 0; i < 10; i++) {
 			se (n[i] != " ") {
@@ -46,6 +54,7 @@ programa
 		}
 	}
 
+  //função para listar os filmes que estão alugados
 	funcao filmesLocados(cadeia n[], inteiro a[], inteiro l[]) {
 		para (inteiro i = 0; i < 10; i++) {
 			se (l[i] != 0) {
@@ -64,6 +73,8 @@ programa
 
 		//funcao para inicializar as posições vetoriais
 		zerarDados(nomeFilme, ano, locado, vezesAlugado)
+
+    //função para apresentar o menu ao usuário
 		menuInicial(menu, nomeFilme, ano, locado)
 		
 	}
