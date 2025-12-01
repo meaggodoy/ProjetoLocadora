@@ -12,8 +12,16 @@ programa
 		}
 	}
 
+  funcao cadeia transcreverLocado(inteiro lc) {
+      se (lc == 0) {
+        retorne "Não"
+      } senao se (lc == 1) {
+        retorne "Sim"
+      }
+  }
+
   	//função para apresentar o menu para o usuário
-	funcao menuInicial(inteiro m, cadeia n[], inteiro a[], inteiro l[], inteiro v[]) {
+	funcao menuInicial(inteiro m, cadeia n[], inteiro a[], inteiro l[], inteiro v[], inteiro k) {
 		faca {
 			escreva("Selecione a opção desejada:")
 			escreva("\n1 - Cadastrar filme | 2 - Listar filmes disponíveis | 3 - Filmes alugados | 4 - Alugar um filme | 5 - Devolver filme \n6 - Filme mais alugado | 7 - Buscar filme | 8 - Atualizar dados do filme | 9 - Estatísticas gerais | 10 - Sair do programa | ")
@@ -21,7 +29,7 @@ programa
 
 		     escolha(m) {
 		       caso 1:
-		       cadastrarFilme(n, a)
+		       cadastrarFilme(n, a, k)
 		       pare
 		       caso 2:
 		       listarDisponiveis(n, a, l)
@@ -48,30 +56,59 @@ programa
 		       estatisticas(n, l)
 		       pare
 		      }
+          se (m > 10) {
+            escreva("Escolha novamente.")
+          }
 		} enquanto(m != 10)
-		
 	}
 
-  	//função da primeira opção: cadastrar filmes
-	funcao cadastrarFilme(cadeia n[], inteiro a[]) {
-		para (inteiro i = 0; i < 3; i++) {
-			escreva("Digite o nome do filme: ")
-			leia(n[i])
-			escreva("Digite o ano do filme: ")
-			leia(a[i])
-		}
+  	//função Cadastrar Filmes -> é possível o usuário cadastrar alguns filmes por vez
+	funcao cadastrarFilme(cadeia n[], inteiro a[], inteiro &k) {
+    inteiro continuarCadastro
+
+    //para isso abrimos o laço com i equivalendo a k, que será a variável "memória" do laço
+    escreva("================ CADASTRAR FILME ================\n")
+    para (inteiro i = k; i < 10; i++) {
+      se (k < 10) {
+        escreva("Digite o nome do filme: ")
+        leia(n[i])
+        escreva("Digite o ano do filme: ")
+        leia(a[i])
+
+        k++ //incrementamos k para continuar a sequência
+
+        //aqui perguntamos se deseja cadastrar um novo filme
+        se (k < 10) {
+          escreva("Deseja cadastrar um novo filme?\n1 - Sim | 2 - Não ")
+          leia(continuarCadastro)
+      
+          //caso não, o laço será interrompido
+          se (continuarCadastro == 2) {
+            escreva("=================================================\n")
+            pare
+          }
+        } senao {
+          escreva("Limite da locadora atingido.\n")
+        }
+      } senao {
+        escreva("Limite da locadora atingido.\n")
+      }
+      escreva("=================================================\n")
+    }
 	}
 
-  	//função da segunda opção: listar os filmes disponíveis
+  	//função Listar os Filmes Disponíveis -> apresentamos apenas os filmes cadastrados
 	funcao listarDisponiveis(cadeia n[], inteiro a[], inteiro l[]) {
+    escreva("================ FILMES DISPONÍVEIS ================")
 		para (inteiro i = 0; i < 10; i++) {
 			se (n[i] != " ") {
-				escreva("Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", l[i])
+				escreva(i + 1, "| Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", transcreverLocado(l[i]), "\n")
 			} senao {
-				escreva("Nenhum filme disponível.\n")
+				escreva("Nenhum filme disponível no acervo.\n")
 				i = 10
 			}
 		}
+    escreva("====================================================\n")
 	}
 
   	//função da terceira opção: listar os filmes que estão alugados
@@ -223,14 +260,12 @@ programa
 	funcao inicio()
 	{
 		cadeia nomeFilme[10]
-		inteiro ano[10], locado[10], vezesAlugado[10], menu = 0
+		inteiro ano[10], locado[10], vezesAlugado[10], menu = 0, k = 0
 
 		//funcao para inicializar as posições vetoriais
 		zerarDados(nomeFilme, ano, locado, vezesAlugado)
 
     		//função para apresentar o menu ao usuário
-		menuInicial(menu, nomeFilme, ano, locado, vezesAlugado)
-		
+		menuInicial(menu, nomeFilme, ano, locado, vezesAlugado, k)
 	}
 }
-
