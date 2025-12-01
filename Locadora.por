@@ -143,15 +143,18 @@ programa
 	}
 
 	funcao buscarFilme(cadeia n[], inteiro a[], inteiro l[], inteiro v[]) {
-		cadeia busca
+		cadeia busca, igualarnomes
 		logico resultado = falso
 		
 		escreva("Qual filme você deseja? ")
 		leia(busca)
 
+		busca = t.caixa_baixa(busca)//deixar a resposta em letras minusculas
+		
 		para (inteiro i = 0; i < 10; i++) {
 			se (n[i] != " ") {
-				se (t.posicao_texto(busca, n[i], 0) >= 0) {
+				igualarnomes = t.caixa_baixa(n[i])//deixar todos os nomes dos filmes em letras minusculas
+				se (t.posicao_texto(busca, igualarnomes, 0) >= 0) {
 					escreva("Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", l[i], " | Quantidade de vezes locado: ", v[i])
 					resultado = verdadeiro
 				}
@@ -230,3 +233,4 @@ programa
 		
 	}
 }
+
