@@ -15,7 +15,7 @@ programa
   funcao cadeia transcreverLocado(inteiro lc) {
       se (lc == 0) {
         retorne "Não"
-      } senao se (lc == 1) {
+      } senao {
         retorne "Sim"
       }
   }
@@ -99,71 +99,111 @@ programa
 
   	//função Listar os Filmes Disponíveis -> apresentamos apenas os filmes cadastrados
 	funcao listarDisponiveis(cadeia n[], inteiro a[], inteiro l[]) {
-    escreva("================ FILMES DISPONÍVEIS ================")
-		para (inteiro i = 0; i < 10; i++) {
-			se (n[i] != " ") {
-				escreva(i + 1, "| Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", transcreverLocado(l[i]), "\n")
-			} senao {
-				escreva("Nenhum filme disponível no acervo.\n")
-				i = 10
-			}
-		}
-    escreva("====================================================\n")
-	}
-
-  	//função da terceira opção: listar os filmes que estão alugados
-	funcao filmesLocados(cadeia n[], inteiro a[], inteiro l[]) {
 		inteiro filme = 0
 		
+    		escreva("================ FILMES DISPONÍVEIS ================")
+		para (inteiro i = 0; i < 10; i++) {
+			se (n[i] != " ") {
+				escreva("\n", i + 1, " | Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", transcreverLocado(l[i]), "\n")
+
+				filme++
+			} 
+		}
+		se (filme == 0) {
+			escreva("Nenhum filme disponível no acervo.")
+		}
+		
+    		escreva("===================================================\n")
+	}
+
+  	//função Filmes Locados -> serão apresentados apenas aqueles filmes que tiverem sido alugados
+	funcao filmesLocados(cadeia n[], inteiro a[], inteiro l[]) {
+		inteiro filme = 0
+
+		escreva("=============== FILMES LOCADOS ===============\n")
 		para (inteiro i = 0; i < 10; i++) {
 			se (l[i] != 0) {
+				//usamos o vetor "locado" para condicionar a apresentação
 				escreva("Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", l[i])
+				
 				filme++
 			}
 		}
 
 		se (filme == 0) {
-			escreva("Nenhum filme alugado")
+			escreva("Nenhum filme está locado no momento.\n")
 		}
+
+		escreva("==============================================\n")
 	}
 
+	//função Alugar Filme -> usuário é capaz de escolher qual filme deseja alugar
 	funcao alugarFilme(cadeia n[], inteiro l[], inteiro v[]) {
-		inteiro id
+		inteiro id, filme = 0
 
-		escreva("Filmes disponíveis:\n")
+		escreva("============== CATÁLOGO PARA LOCAÇÃO ==============\n")
 		para (inteiro i = 0; i < 10; i++) {
 			se (n[i] != " ") {
 				se (l[i] == 0) {
-					escreva(i, " | Nome do filme: ", n[i], "\n")
+					escreva(i + 1, " | Nome do filme: ", n[i], "\n")
+
+					filme++
 				}
 			}
 		}
+		
+		se (filme == 0) {
+			//se não há filmes para serem locados, então finaliza
+			escreva("Não há filmes disponíveis para locação.\n")
+		} senao {
+			//se há filmes para serem locados, perguntamos:
+			escreva("---------------------------------------------------\n")
+	
+			//após a listagem dos filmes o usuário irá definir qual o filme pelo índice
+			escreva("Digite o número do filme desejado: ")
+			leia(id)
+	
+			//os status de "locado" e "vezes alugado" sofrem alterações, status muda para 1 = "sim" e é incrementado
+			l[id - 1] = 1
+			v[id - 1]++
+			escreva("Você alugou: ", n[id - 1], "! Bom proveito!\n")
+		}
 
-		escreva("Digite a posição do filme para locação: ")
-		leia(id)
-
-		l[id] = 1
-		v[id]++
-		escreva("O filme ", n[id], " foi locado!")
+		escreva("===================================================\n")
 	}
 
+	//função Devolver Filme -> o usuário poderá devolver apenas os filmes previamente locados
 	funcao devolverFilme(cadeia n[], inteiro l[]) {
-		inteiro id
+		inteiro id, filme = 0
 
-		escreva("Filmes alugados:\n")
+		escreva("============== DEVOLVER FILME ==============\n")
 		para (inteiro i = 0; i < 10; i++) {
 			se (n[i] != " ") {
 				se (l[i] == 1) {
-					escreva(i, " | Nome do filme: ", n[i], "\n")
+					//apresentamos apenas os filmes que estão locados -> condicionados pelo vetor "locado"
+					escreva(i + 1, " | Nome do filme: ", n[i], "\n")
+
+					filme++
 				}
 			}
 		}
 
-		escreva("Digite a posição do filme para devolução: ")
-		leia(id)
+		se (filme == 0) {
+			//se não há filmes para serem devolvidos, então finaliza
+			escreva("Não há filmes disponíveis para devolução.\n")
+		} senao {
+			//se há filmes para serem devolvidos, perguntamos:
+			escreva("---------------------------------------------------\n")
+			
+			escreva("Digite a posição do filme para devolução: ")
+			leia(id)
+	
+			//retornamos o status de locação para 0 = "não"
+			l[id - 1] = 0
+			escreva("O filme ", n[id - 1], " foi devolvido!\n")
+		}
 
-		l[id] = 0
-		escreva("O filme ", n[id], " foi devolvido!")
+		escreva("===================================================\n")
 	}
 
 	funcao maisLocado(cadeia n[], inteiro a[], inteiro l[], inteiro v[]) {
@@ -176,7 +216,7 @@ programa
 		}
 
 		escreva("O filme mais alugado foi:\n")
-		escreva("Nome do filme: ", n[contIndice], " | Ano de lançamento: ", a[contIndice], " | Locado: ", l[contIndice], " | Vezes que foi alugado: ", v[contIndice])
+		escreva("Nome do filme: ", n[contIndice], " | Ano de lançamento: ", a[contIndice], " | Locado: ", transcreverLocado(l[contIndice]), " | Vezes que foi alugado: ", v[contIndice])
 	}
 
 	funcao buscarFilme(cadeia n[], inteiro a[], inteiro l[], inteiro v[]) {
