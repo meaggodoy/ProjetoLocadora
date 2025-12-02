@@ -12,6 +12,7 @@ programa
 		}
 	}
 
+	//para apreentar ao usuário, é feita a verificação do vetor locado e retornado a tradução -> 0 = não e 1 = sim
   	funcao cadeia transcreverLocado(inteiro lc) {
       	se (lc == 0) {
         		retorne "Não"
@@ -20,6 +21,7 @@ programa
       	}
   	}
 
+	//introdução inicial ao usuário
   	funcao apresentacao() {
 		escreva("==============================================\n")
 		escreva("BEM-VINDO À LOCADORA BUBSY GAMES\n")
@@ -366,6 +368,8 @@ programa
 	
 	funcao inicio()
 	{
+		//por questões de padrão as variáveis principais foram criadas sem abreviações na função início e suas correspondentes
+		//que foram enviadas às funções estão atribuídas com a letra inicial da variável principal
 		cadeia nomeFilme[10]
 		inteiro ano[10], locado[10], vezesAlugado[10], menu = 0, k = 0
 
