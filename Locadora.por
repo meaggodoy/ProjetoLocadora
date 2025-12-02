@@ -12,19 +12,37 @@ programa
 		}
 	}
 
-  funcao cadeia transcreverLocado(inteiro lc) {
-      se (lc == 0) {
-        retorne "Não"
-      } senao {
-        retorne "Sim"
-      }
-  }
+  	funcao cadeia transcreverLocado(inteiro lc) {
+      	se (lc == 0) {
+        		retorne "Não"
+      	} senao {
+        		retorne "Sim"
+      	}
+  	}
+
+  	funcao apresentacao() {
+		escreva("==============================================\n")
+		escreva("BEM-VINDO À LOCADORA BUBSY GAMES\n")
+		escreva("==============================================\n")
+		escreva("Prepare a pipoca, ajuste o tracking do VHS e\n")
+		escreva("escolha seu próximo grande sucesso!\n")
+		escreva("----------------------------------------------\n")
+		escreva("Nesta locadora, você pode:\n")
+		escreva("Cadastrar filmes\n")
+		escreva("Alugar e devolver títulos\n")
+		escreva("Descobrir o filme mais alugado\n")
+		escreva("Buscar por nome\n")
+		escreva("Ver as estatísticas do acervo\n")
+		escreva("----------------------------------------------\n")
+		escreva("Carregando catálogo... pronto!\n")
+		escreva("==============================================\n")
+  	}
 
   	//função para apresentar o menu para o usuário
 	funcao menuInicial(inteiro m, cadeia n[], inteiro a[], inteiro l[], inteiro v[], inteiro k) {
 		faca {
 			escreva("Selecione a opção desejada:")
-			escreva("\n1 - Cadastrar filme | 2 - Listar filmes disponíveis | 3 - Filmes alugados | 4 - Alugar um filme | 5 - Devolver filme \n6 - Filme mais alugado | 7 - Buscar filme | 8 - Atualizar dados do filme | 9 - Estatísticas gerais | 10 - Sair do programa | ")
+			escreva("\n1 - Cadastrar filme \n2 - Listar filmes disponíveis \n3 - Filmes alugados \n4 - Alugar um filme \n5 - Devolver filme \n6 - Filme mais alugado \n7 - Buscar filme \n8 - Atualizar dados do filme \n9 - Estatísticas gerais \n10 - Sair do programa\n")
 			leia(m)
 
 		     escolha(m) {
@@ -57,9 +75,16 @@ programa
 		       pare
 		      }
           se (m > 10) {
-            escreva("Escolha novamente.")
+            escreva("Opção inválida, digite novamente.\n")
+            escreva("---------------------------------------------------\n")
           }
 		} enquanto(m != 10)
+		
+		escreva("==============================================\n")
+		escreva("Obrigado por utilizar a nossa LOCADORA!\n")
+		escreva("Volte sempre para mais nostalgia!\n")
+		escreva("==============================================\n")
+
 	}
 
   	//função Cadastrar Filmes -> é possível o usuário cadastrar alguns filmes por vez
@@ -101,16 +126,16 @@ programa
 	funcao listarDisponiveis(cadeia n[], inteiro a[], inteiro l[]) {
 		inteiro filme = 0
 		
-    		escreva("================ FILMES DISPONÍVEIS ================")
+    		escreva("================ FILMES DISPONÍVEIS ================\n")
 		para (inteiro i = 0; i < 10; i++) {
 			se (n[i] != " ") {
-				escreva("\n", i + 1, " | Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", transcreverLocado(l[i]), "\n")
+				escreva("", i + 1, " | Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", transcreverLocado(l[i]), "\n")
 
 				filme++
 			} 
 		}
 		se (filme == 0) {
-			escreva("Nenhum filme disponível no acervo.")
+			escreva("Nenhum filme disponível no acervo.\n")
 		}
 		
     		escreva("===================================================\n")
@@ -206,84 +231,125 @@ programa
 		escreva("===================================================\n")
 	}
 
+	//função Mais Locado -> apresenta o filme que foi alugado mais vezes, condicionado pelo vetor "vezesLocado"
 	funcao maisLocado(cadeia n[], inteiro a[], inteiro l[], inteiro v[]) {
-		inteiro contLocado = 0, contIndice = 0
+		inteiro contLocado = 0, contIndice = 0, filme = 0
 
+		escreva("============= FILME MAIS LOCADO =============\n")
+		
+		//fazemos um contador e verificamos os valores do vetor
 		para (inteiro i = 0; i < 10; i++) {
 			se (v[i] > contLocado) {
 				contIndice = i
+
+				filme++
 			}
 		}
 
-		escreva("O filme mais alugado foi:\n")
-		escreva("Nome do filme: ", n[contIndice], " | Ano de lançamento: ", a[contIndice], " | Locado: ", transcreverLocado(l[contIndice]), " | Vezes que foi alugado: ", v[contIndice])
+		se (filme == 0) {
+			escreva("Nenhum resultado disponível.\n")
+			escreva("Ainda não há filmes cadastrados ou nenhum deles foi alugado até o momento.\n")
+		} senao {
+			escreva("Nome do filme: ", n[contIndice], " | Ano de lançamento: ", a[contIndice], " | Locado: ", transcreverLocado(l[contIndice]), " | Vezes que foi alugado: ", v[contIndice], "\n")
+		}
+		escreva("===================================================\n")
 	}
 
+	//função Buscar Filme -> pela pesquisa do usuário iremos retornar se temos ou não o filme
 	funcao buscarFilme(cadeia n[], inteiro a[], inteiro l[], inteiro v[]) {
 		cadeia busca, igualarnomes
 		logico resultado = falso
-		
+
+		escreva("============== BUSCA DE FILMES ==============\n")
 		escreva("Qual filme você deseja? ")
 		leia(busca)
 
-		busca = t.caixa_baixa(busca)//deixar a resposta em letras minusculas
+		//deixar a resposta em letras minusculas
+		busca = t.caixa_baixa(busca)
 		
 		para (inteiro i = 0; i < 10; i++) {
 			se (n[i] != " ") {
-				igualarnomes = t.caixa_baixa(n[i])//deixar todos os nomes dos filmes em letras minusculas
+				//deixar todos os nomes dos filmes em letras minusculas
+				igualarnomes = t.caixa_baixa(n[i]) 
+
+				//com a busca e o filme "iguais" usamos a função para verificar a equivalência entre as variáveis
 				se (t.posicao_texto(busca, igualarnomes, 0) >= 0) {
-					escreva("Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", l[i], " | Quantidade de vezes locado: ", v[i])
+					escreva("----------------------------------------------\n")
+					escreva("Filme encontrado:\n")
+					escreva("Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", transcreverLocado(l[i]), " | Quantidade de vezes locado: ", v[i])
 					resultado = verdadeiro
 				}
 			}
 		}
 
 		se (resultado == falso) {
-			escreva("Não temos o filme")
+			escreva("----------------------------------------------\n")
+			escreva("Nenhum filme correspondente encontrado.")
 		}
+
+		escreva("\n===================================================\n")
 	}
 
+	///funcao Atualizar Filme -> o usuário escolhe qual filme deseja atualizar e o que irá atualizar (nome ou ano)
 	funcao atualizarFilme(cadeia n[], inteiro a[]) {
-		inteiro id, op
-		
+		inteiro id, op, filme = 0
+
+		escreva("=============== ATUALIZAR FILME ===============\n")
 		escreva("Filmes disponíveis:\n")
 		para (inteiro i = 0; i < 10; i++) {
 			se (n[i] != " ") {
-				escreva(i, " | Nome do filme: ", n[i], " | Ano: ", a[i], "\n")
+				escreva(i + 1, " | Nome do filme: ", n[i], " | Ano: ", a[i], "\n")
+
+				filme++
 			}
 		}
+		se (filme == 0) {
+			//se não há filmes cadastrados não tem como atualizar nenhum
+			escreva("Não há filmes disponíveis atualização.\n")
+		} senao {
+			escreva("----------------------------------------------\n")
 
-		escreva("Qual índice você deseja atualizar? ")
-		leia(id)
-		escreva("O que você deseja atualizar? \n1 - Nome e ano | 2 - Apenas o nome | 3 - Apenas o ano ")
-		leia(op)
-
-		escolha(op) {
-			caso 1:
-			escreva("Nome: ")
-			leia(n[id])
-			escreva("Ano: ")
-			leia(a[id])
-			pare
-			caso 2:
-			escreva("Nome: ")
-			leia(n[id])
-			pare
-			caso 3:
-			escreva("Ano: ")
-			leia(a[id])
-			pare
+			escreva("Selecione o índice do filme que deseja alterar:")
+			leia(id)
+			escreva("O que você deseja atualizar? \n1 - Nome e ano | 2 - Apenas o nome | 3 - Apenas o ano :")
+			leia(op)
+	
+			escolha(op) {
+				caso 1:
+				escreva("Nome: ")
+				leia(n[id - 1])
+				escreva("Ano: ")
+				leia(a[id - 1])
+				pare
+				caso 2:
+				escreva("Nome: ")
+				leia(n[id - 1])
+				pare
+				caso 3:
+				escreva("Ano: ")
+				leia(a[id - 1])
+				pare
+			}
+			escreva("Dados atualizados com sucesso!\n")
+			escreva(id, " | Nome do filme: ", n[id - 1], " | Ano: ", a[id - 1], "\n")
 		}
+		
+		escreva("===================================================\n")
 	}
 
+	//função Estatísticas -> apresenta quantos filmes foram cadastrados, quantos estão locados e a ocupação da locadora
 	funcao estatisticas(cadeia n[], inteiro l[]) {
 		inteiro contL = 0
 		real ocupacao = 0.0, contN = 0.0
 
+		escreva("=============== ESTATÍSTICAS GERAIS ===============\n")
+
 		para (inteiro i = 0; i < 10; i++) {
+			//para contar a quantidade de filmes cadastrados, ele percorre o vetor nos índices diferentes de vazio e incrementa o contador
 			se (n[i] != " ") {
 				contN++
 			}
+			//para contar a quantidade de filmes locados, ele percorre o vetor nos índices iguais a 1 (equivale a "sim") e incrementa o contador
 			se (l[i] == 1) {
 				contL++
 			}
@@ -291,10 +357,11 @@ programa
 		ocupacao = contN * 10
 
 		se (contN > 0) {
-			escreva("Estatísticas:\nQuantidade de filmes: ", contN, "\nQuantidade de filmes locados: ", contL, "\nOcupação total da locadora: ", ocupacao, "%")	
+			escreva("Quantidade de filmes: ", contN, "\nQuantidade de filmes locados: ", contL, "\nOcupação total da locadora: ", ocupacao, "%")	
 		} senao {
-			escreva("Nenhum filme cadastrado.")
+			escreva("Nenhum filme cadastrado no sistema.")
 		}
+		escreva("\n===================================================\n")
 	}
 	
 	funcao inicio()
@@ -305,6 +372,7 @@ programa
 		//funcao para inicializar as posições vetoriais
 		zerarDados(nomeFilme, ano, locado, vezesAlugado)
 
+		apresentacao()
     		//função para apresentar o menu ao usuário
 		menuInicial(menu, nomeFilme, ano, locado, vezesAlugado, k)
 	}
