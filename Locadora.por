@@ -40,7 +40,7 @@ programa
 		escreva("==============================================\n")
   	}
 
-  	//função para apresentar o menu para o usuário
+  	//função para apresentar o menu para o usuário                                   //variavel k = contador de filmes
 	funcao menuInicial(inteiro m, cadeia n[], inteiro a[], inteiro l[], inteiro v[], inteiro k) {
 		faca {
 			escreva("Selecione a opção desejada:")
@@ -381,3 +381,4 @@ programa
 		menuInicial(menu, nomeFilme, ano, locado, vezesAlugado, k)
 	}
 }
+
