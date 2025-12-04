@@ -151,7 +151,7 @@ programa
 		para (inteiro i = 0; i < 10; i++) {
 			se (l[i] != 0) {
 				//usamos o vetor "locado" para condicionar a apresentação
-				escreva("Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", l[i])
+				escreva("Nome do filme: ", n[i], " | Ano de lançamento: ", a[i], " | Locado: ", transcreverLocado(l[i]), "\n")
 				
 				filme++
 			}
@@ -381,4 +381,3 @@ programa
 		menuInicial(menu, nomeFilme, ano, locado, vezesAlugado, k)
 	}
 }
-
